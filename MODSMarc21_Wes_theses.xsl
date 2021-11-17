@@ -187,7 +187,9 @@ WU END -->
         <!-- 05 -->
         <xsl:text>n</xsl:text>
         <!-- 06 -->
-        <xsl:apply-templates mode="leader" select="mods:typeOfResource[1]"/>
+<!-- <xsl:apply-templates mode="leader" select="mods:typeOfResource[1]"/> -->	      
+<!-- WU BEGIN - 06 static "t" for theses -->
+	<xsl:text>t</xsl:text>	
         <!-- 07 -->
         <xsl:choose>
           <xsl:when test="mods:originInfo/mods:issuance='monographic'">m</xsl:when>
@@ -206,9 +208,13 @@ WU END -->
         <!-- 12-16 -->
         <xsl:text>     </xsl:text>
         <!-- 17 -->
-        <xsl:text>u</xsl:text>
+<!--        <xsl:text>u</xsl:text> -->	      
+<!-- WU BEGIN - 17 static "m" for theses -->
+	<xsl:text>m</xsl:text>
         <!-- 18 -->
-        <xsl:text>u</xsl:text>
+<!--        <xsl:text>u</xsl:text> -->	      
+<!-- WU BEGIN - 18 static "a" for theses -->
+	<xsl:text>a</xsl:text>
         <!-- 19 -->
         <xsl:text> </xsl:text>
         <!-- 20-23 -->
