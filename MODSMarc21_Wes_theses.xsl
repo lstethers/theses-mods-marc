@@ -241,8 +241,8 @@ WU END -->
           <xsl:apply-templates mode="ctrl008" select="mods:typeOfResource"/>
         </xsl:variable>
         <!-- 00-05 -->
+<!-- WU BEGIN - ignore creation date
         <xsl:choose>
-          <!-- 1/04 fix -->
           <xsl:when test="mods:recordInfo/mods:recordContentSource[@authority='marcorg']">
             <xsl:value-of select="mods:recordInfo/mods:recordCreationDate[@encoding='marc']"/>
           </xsl:when>
@@ -250,22 +250,30 @@ WU END -->
             <xsl:text>      </xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 00-05 static "YYMMDD" for theses -->
+		<xsl:text>YYMMDD</xsl:text>
+
         <!-- 06 -->
+<!-- WU BEGIN - static 06
         <xsl:choose>
           <xsl:when test="mods:originInfo/mods:issuance='monographic' and count(mods:originInfo/mods:dateIssued)=1">s</xsl:when>
-          <!-- v3 questionable -->
           <xsl:when test="mods:originInfo/mods:dateIssued[@qualifier='questionable']">q</xsl:when>
           <xsl:when test="mods:originInfo/mods:issuance='monographic' and mods:originInfo/mods:dateIssued[@point='start'] and mods:originInfo/mods:dateIssued[@point='end']">m</xsl:when>
           <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']='9999'">c</xsl:when>
           <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']='uuuu'">u</xsl:when>
           <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']">d</xsl:when>
           <xsl:when test="not(mods:originInfo/mods:issuance) and mods:originInfo/mods:dateIssued">s</xsl:when>
-          <!-- v3 copyright date-->
           <xsl:when test="mods:originInfo/mods:copyrightDate">s</xsl:when>
           <xsl:otherwise>|</xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 06 static "s" for theses -->
+		<xsl:text>s</xsl:text>
+
         <!-- 07-14          -->
         <!-- 07-10 -->
+<!-- WU BEGIN - static 07-10
         <xsl:choose>
           <xsl:when test="mods:originInfo/mods:dateIssued[@point='start' and @encoding='marc']">
             <xsl:value-of select="mods:originInfo/mods:dateIssued[@point='start' and @encoding='marc']"/>
@@ -277,6 +285,9 @@ WU END -->
             <xsl:text>    </xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 07-10 static "YYYY" for theses -->
+		<xsl:text>YYYY</xsl:text>
         <!-- 11-14 -->
         <xsl:choose>
           <xsl:when test="mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']">
@@ -287,12 +298,10 @@ WU END -->
           </xsl:otherwise>
         </xsl:choose>
         <!-- 15-17 -->
+<!-- WU BEGIN - static 15-17
         <xsl:choose>
-          <!-- v3 place -->
           <xsl:when test="mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry']">
-            <!-- v3 fixed marc:code reference and authority change-->
             <xsl:value-of select="mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry']"/>
-            <!-- 1/04 fix -->
             <xsl:if test="string-length(mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry'])=2">
               <xsl:text> </xsl:text>
             </xsl:if>
@@ -301,6 +310,10 @@ WU END -->
             <xsl:text>   </xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 15-17 static "xx " for theses -->
+		<xsl:text>xx </xsl:text>
+
         <!-- 18-20 -->
         <xsl:text>|||</xsl:text>
         <!-- 21 -->
@@ -327,7 +340,8 @@ WU END -->
           <xsl:otherwise>|</xsl:otherwise>
         </xsl:choose>
         <!-- 23 -->
-        <xsl:choose>
+<!-- WU BEGIN - static 23
+<!--        <xsl:choose>
           <xsl:when test="$typeOf008='BK' or $typeOf008='MU' or $typeOf008='SE' or $typeOf008='MM'">
             <xsl:choose>
               <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='braille'">f</xsl:when>
@@ -341,8 +355,11 @@ WU END -->
             </xsl:choose>
           </xsl:when>
           <xsl:otherwise>|</xsl:otherwise>
-        </xsl:choose>
+        </xsl:choose> -->
+<!-- WU BEGIN - 23 static "\" for theses -->		
+		<xsl:text>\</xsl:text>
         <!-- 24-27 -->
+<!-- WU BEGIN 24-27 static
         <xsl:choose>
           <xsl:when test="$typeOf008='BK'">
             <xsl:call-template name="controlField008-24-27"/>
@@ -372,9 +389,13 @@ WU END -->
             <xsl:text>||||</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 24-27 static "mb||" for theses -->		
+		<xsl:text>mb||</xsl:text>
         <!-- 28 -->
         <xsl:text>|</xsl:text>
         <!-- 29 -->
+<!-- WU BEGIN 29 static
         <xsl:choose>
           <xsl:when test="$typeOf008='BK' or $typeOf008='SE'">
             <xsl:choose>
@@ -396,7 +417,9 @@ WU END -->
           </xsl:when>
           <xsl:otherwise>|</xsl:otherwise>
         </xsl:choose>
+-->
         <!-- 30-31 -->
+<!-- WU BEGIN 30-31 static
         <xsl:choose>
           <xsl:when test="$typeOf008='MU'">
             <xsl:call-template name="controlField008-30-31"/>
@@ -412,9 +435,13 @@ WU END -->
             <xsl:text>||</xsl:text>
           </xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 29-31 static "000" for theses -->		
+		<xsl:text>000</xsl:text>
         <!-- 32 -->
         <xsl:text>|</xsl:text>
         <!-- 33 -->
+<!-- WU BEGIN - 33 static
         <xsl:choose>
           <xsl:when test="$typeOf008='VM'">
             <xsl:choose>
@@ -455,6 +482,9 @@ WU END -->
           </xsl:when>
           <xsl:otherwise>|</xsl:otherwise>
         </xsl:choose>
+-->
+<!-- WU BEGIN - 33 static "0" for theses -->		
+		<xsl:text>0</xsl:text>
         <!-- 34 -->
         <xsl:choose>
           <xsl:when test="$typeOf008='BK'">
@@ -476,14 +506,18 @@ WU END -->
           </xsl:otherwise>
         </xsl:choose>
         <!-- 38-39 -->
-        <xsl:text>||</xsl:text>
+<!-- WU BEGIN 38-39 static       <xsl:text>||</xsl:text> -->
+<!-- WU BEGIN - 38-39 static "|d" for theses -->		
+		<xsl:text>|d</xsl:text>
       </marc:controlfield>
       <!-- 1/04 fix sort -->
       <xsl:call-template name="source"/>
       <xsl:apply-templates/>
+<!-- WU BEGIN - not using 050
       <xsl:if test="mods:classification[@authority='lcc']">
         <xsl:call-template name="lcClassification"/>
       </xsl:if>
+WU END -->	  
     </marc:record>
   </xsl:template>
 
