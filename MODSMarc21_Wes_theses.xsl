@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- WU BEGIN 
+Purpose:
+This file is the XSLT to convert Islandora theses MODS records to Marc in order to create Alma print thesis records. It can be used in MarcEdit Tools or in any XSLT interpreter such as XML Notepad.
+It is initially based upon the default MODS to Marc21 XSLT converter in MarcEdit, but has been extensively modified by Wesleyan to fit our own data.
+See explanations of field mappings here:
+https://docs.google.com/spreadsheets/d/1kEcpSG2uheLLJnO8OxDHJkAh5x-3pZXUvuvqgNgo0Yk/edit#gid=0
+WU END -->
+
+<!-- WU BEGIN - added xmlns:etd declaration to be able to get at the etd attributes -->
 <xsl:stylesheet version="1.0"
 	xmlns:xlink="http://www.w3.org/1999/xlink"
 	xmlns:mods="http://www.loc.gov/mods/v3"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 	exclude-result-prefixes="mods xlink"
-	xmlns:marc="http://www.loc.gov/MARC21/slim">
+	xmlns:marc="http://www.loc.gov/MARC21/slim" 
+	xmlns:etd="http://www.ndltd.org/standards/metadata/etdms/1.0" 
+	xmlns:date="http://exslt.org/dates-and-times">
+<!-- WU END --> 
   <!-- MODS v3 to MARC21Slim transformation  	ntra 2/20/04 -->
 
   <xsl:include href="http://www.loc.gov/marcxml/xslt/MARC21slimUtils.xsl"/>
