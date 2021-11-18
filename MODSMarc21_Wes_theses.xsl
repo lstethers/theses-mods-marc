@@ -565,46 +565,24 @@ WU END -->
 <!-- END WU modified 856 -->
 
 <!-- BEGIN WU remove 020, 024, 028, 010, 720, 110, 111, 711 -->
-
-  <!-- v3 role-->
-  <xsl:template match="mods:name[@type='personal'][mods:role/mods:roleTerm[@type='text']='creator']">
+<!-- BEGIN WU Author 100 -->
+  <xsl:template match="mods:name[@type='personal'][mods:role/mods:roleTerm[@type='text']='author']">
     <xsl:call-template name="datafield">
       <xsl:with-param name="tag">100</xsl:with-param>
       <xsl:with-param name="ind1">1</xsl:with-param>
       <xsl:with-param name="subfields">
         <marc:subfield code="a">
-          <xsl:value-of select="mods:namePart"/>
+          <xsl:value-of select="mods:namePart[@type='family']"/>
+		  <xsl:text>, </xsl:text>
+		  <xsl:value-of select="mods:namePart[@type='given']"/>
         </marc:subfield>
-        <!-- v3 termsOfAddress -->
-        <xsl:for-each select="mods:namePart[@type='termsOfAddress']">
-          <marc:subfield code="c">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <xsl:for-each select="mods:namePart[@type='date']">
-          <marc:subfield code="d">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <!-- v3 role -->
-        <xsl:for-each select="mods:role/mods:roleTerm[@type='text']">
-          <marc:subfield code="e">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <xsl:for-each select="mods:affiliation">
-          <marc:subfield code="u">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <xsl:for-each select="mods:description">
-          <marc:subfield code="g">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
+		<marc:subfield code="e">
+			<xsl:text>author.</xsl:text>
+		</marc:subfield>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+<!-- END WU Author --> 
 
   <!-- v3 role -->
   <xsl:template match="mods:name[@type='personal'][mods:role/mods:roleTerm[@type='text']!='creator' or not(mods:role)]">
