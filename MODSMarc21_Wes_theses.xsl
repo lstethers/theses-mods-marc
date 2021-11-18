@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- WU BEGIN 
+Edit history:
+- 20211015 by LSS to set static values in LDR and 008 fields
+- 20211015 by LSS to make some static values lower case  
+- 20211015 by LSS to substitute YYYY placeholder in 264 $c and 502 $a  
+- 20210528 by LSS to add 502 and 710 fields 
+
 Purpose:
 This file is the XSLT to convert Islandora theses MODS records to Marc in order to create Alma print thesis records. It can be used in MarcEdit Tools or in any XSLT interpreter such as XML Notepad.
 It is initially based upon the default MODS to Marc21 XSLT converter in MarcEdit, but has been extensively modified by Wesleyan to fit our own data.
@@ -668,5 +674,5 @@ WU END -->
     </xsl:call-template>
   </xsl:template>
 <!-- END WU 690 -->
-
+ 
 </xsl:stylesheet>
