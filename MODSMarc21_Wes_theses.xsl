@@ -654,5 +654,19 @@ WU END -->
   </xsl:template>
 
 <!-- BEGIN WU remove 650, 630, 600, 651, 650, 656, 887, 510, 440, 800, 810, 811, 787, 780, 785, 775, 776, 534, 773, 774, 787 --> 
+<!-- BEGIN WU - 690 subject/topic -->
+  <xsl:template match="mods:subject[local-name(*[1])='topic']">
+    <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">690</xsl:with-param>
+      <xsl:with-param name="ind2">4</xsl:with-param>
+      <xsl:with-param name="subfields">
+        <marc:subfield code="a">
+          <xsl:value-of select="*[1]"/>
+        </marc:subfield>
+        <xsl:apply-templates select="*[position()>1]"/>
+      </xsl:with-param>
+    </xsl:call-template>
+  </xsl:template>
+<!-- END WU 690 -->
 
 </xsl:stylesheet>
