@@ -600,36 +600,42 @@ WU END -->
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>  
-<!-- END WU Thesis advisor -->  
-  <!-- v3 role -->
-  <xsl:template match="mods:name[@type='corporate'][mods:role/mods:roleTerm[@type='text']!='creator' or not(mods:role)]">
+<!-- END WU Thesis advisor --> 
+ 
+<!-- BEGIN WU 502 and 710 - also needed to add etd namespace in stylesheet declaration at top -->
+<!-- there may be multiple etd:disciplines.  using the first one for the 502 -->
+<xsl:template match="mods:extension">
+	 <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">502</xsl:with-param>	  
+      <xsl:with-param name="subfields">
+        <marc:subfield code='a'>
+			<xsl:text>Thesis (B.A., Honors, </xsl:text>
+			<xsl:value-of select="etd:degree/etd:discipline[1]" />
+			<xsl:text>)--Wesleyan University, YYYY.</xsl:text>
+        </marc:subfield>
+      </xsl:with-param>	  
+    </xsl:call-template>
+<!-- each etd:discipline gets its own 710 -->
+   <xsl:for-each select="etd:degree/etd:discipline">
     <xsl:call-template name="datafield">
       <xsl:with-param name="tag">710</xsl:with-param>
       <xsl:with-param name="ind1">2</xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code="a">
-          <!-- 1/04 fix -->
-          <xsl:value-of select="mods:namePart[1]"/>
-        </marc:subfield>
-        <xsl:for-each select="mods:namePart[position()>1]">
-          <marc:subfield code="b">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <!-- v3 role -->
-        <xsl:for-each select="mods:role/mods:roleTerm[@type='text']">
-          <marc:subfield code="e">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
-        <xsl:for-each select="mods:description">
-          <marc:subfield code="g">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
+      <xsl:with-param name="subfields"> 
+		<marc:subfield code="a">
+			<xsl:text>Wesleyan University.</xsl:text>
+		</marc:subfield>
+        <marc:subfield code="b">
+          <xsl:value-of select="."/>
+			<xsl:text>,&#160;</xsl:text>		  
+		</marc:subfield>			
+		<marc:subfield code="e">
+			<xsl:text>degree grantor.</xsl:text>
+		</marc:subfield>
       </xsl:with-param>
     </xsl:call-template>
+	</xsl:for-each>
   </xsl:template>
+<!-- END WU 710 --> 
 
   <xsl:template name="authorityInd">
     <xsl:choose>
