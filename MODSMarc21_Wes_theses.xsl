@@ -521,51 +521,12 @@ WU END -->
     </marc:record>
   </xsl:template>
 
-  <xsl:template match="*"/>
 
-  <!-- v3 language -->
-  <xsl:template match="mods:language/mods:languageTerm[@authority='iso639-2b']">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">041</xsl:with-param>
-      <xsl:with-param name="ind1">0</xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code='a'>
-          <xsl:value-of select="."/>
-        </marc:subfield>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <!-- v3 language -->
-  <xsl:template match="mods:language/mods:languageTerm[@authority='rfc3066']">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">041</xsl:with-param>
-      <xsl:with-param name="ind1">0</xsl:with-param>
-      <xsl:with-param name="ind2">7</xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code='a'>
-          <xsl:value-of select="."/>
-        </marc:subfield>
-        <marc:subfield code='2'>rfc3066</marc:subfield>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <!-- 1/04 fix -->
-  <!--	<xsl:template match="mods:targetAudience">
-		<xsl:apply-templates/>
-	</xsl:template>-->
-
-  <!--<xsl:template match="mods:targetAudience/mods:otherValue"> -->
-  <xsl:template match="mods:targetAudience[not(@authority)] | mods:targetAudience[@authority!='marctarget']">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">521</xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code='a'>
-          <xsl:value-of select="."/>
-        </marc:subfield>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-
+<!-- WU BEGIN - removed 041, 521 -->
+<!-- WU BEGIN - added:
+- ; $c 29cm after 300 $a
+- added 336, 337, 338
+-->
   <xsl:template match="mods:physicalDescription">
     <xsl:apply-templates/>
   </xsl:template>
@@ -577,61 +538,67 @@ WU END -->
       <xsl:with-param name="subfields">
         <marc:subfield code='a'>
           <xsl:value-of select="."/>
+		  <xsl:text> ;&#160;</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='c'>
+		  <xsl:text>29 cm</xsl:text>
         </marc:subfield>
       </xsl:with-param>
     </xsl:call-template>
-  </xsl:template>
 
-  <xsl:template match="mods:note[not(@type='statement of responsibility')]">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">
-        <xsl:choose>
-          <xsl:when test="@type='performers'">511</xsl:when>
-          <xsl:when test="@type='venue'">518</xsl:when>
-          <xsl:otherwise>500</xsl:otherwise>
-        </xsl:choose>
-      </xsl:with-param>
+	 <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">336</xsl:with-param>
       <xsl:with-param name="subfields">
         <marc:subfield code='a'>
-          <xsl:value-of select="."/>
+			<xsl:text>text</xsl:text>
         </marc:subfield>
-        <!-- 1/04 fix: 856$u instead -->
-        <!--<xsl:for-each select="@xlink:href">
-					<marc:subfield code='u'>
-						<xsl:value-of select="."/>
-					</marc:subfield>
-				</xsl:for-each>-->
+        <marc:subfield code='b'>
+			<xsl:text>txt</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='2'>
+			<xsl:text>rdacontent</xsl:text>
+        </marc:subfield>
       </xsl:with-param>
     </xsl:call-template>
-    <xsl:for-each select="@xlink:href">
-      <xsl:call-template name="datafield">
-        <xsl:with-param name="tag">856</xsl:with-param>
-        <xsl:with-param name="subfields">
-          <marc:subfield code='u'>
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:with-param>
-      </xsl:call-template>
-    </xsl:for-each>
+	 <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">337</xsl:with-param>	  
+      <xsl:with-param name="subfields">
+        <marc:subfield code='a'>
+			<xsl:text>unmediated</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='b'>
+			<xsl:text>n</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='2'>
+			<xsl:text>rdamedia</xsl:text>
+        </marc:subfield>
+      </xsl:with-param>			
+    </xsl:call-template>
+	 <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">338</xsl:with-param>	  
+      <xsl:with-param name="subfields">
+        <marc:subfield code='a'>
+			<xsl:text>volume</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='b'>
+			<xsl:text>nc</xsl:text>
+        </marc:subfield>
+        <marc:subfield code='2'>
+			<xsl:text>rdacarrier</xsl:text>
+        </marc:subfield> 
+      </xsl:with-param>	  
+    </xsl:call-template>
   </xsl:template>
-  <!-- 1/04 fix -->
-  <!--<xsl:template match="mods:note[@type='statement of responsibility']">
-		<xsl:call-template name="datafield">
-			<xsl:with-param name="tag">245</xsl:with-param>
-			<xsl:with-param name="subfields">
-				<marc:subfield code='c'>
-					<xsl:value-of select="."/>
-				</marc:subfield>
-			</xsl:with-param>
-		</xsl:call-template>
-	</xsl:template>
--->
+<!-- WU END - add added fields 300 $c , 336, 337, 338 -->
+<!-- WU BEGIN - removed 511, 518, 500  WU END -->
+
+<!-- WU BEGIN - changed match field @type value for 506 and 540 WU END -->
   <xsl:template match="mods:accessCondition">
     <xsl:call-template name="datafield">
       <xsl:with-param name="tag">
         <xsl:choose>
-          <xsl:when test="@type='restrictionOnAccess'">506</xsl:when>
-          <xsl:when test="@type='useAndReproduction'">540</xsl:when>
+          <xsl:when test="@type='restriction on access'">506</xsl:when>
+          <xsl:when test="@type='use and reproduction'">540</xsl:when>
         </xsl:choose>
       </xsl:with-param>
       <xsl:with-param name="subfields">
