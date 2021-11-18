@@ -464,36 +464,49 @@ WU END -->
 
 <!-- WU BEGIN - removed 655, 043, 044, 046, 250, 310, 260, 210, 242, 246, 240, 130, 730, 505, 752, 255 WU END -->
 
-<!--<xsl:template match="mods:titleInfo[not(ancestor-or-self::mods:subject)][not(@type)]">-->
+<!-- WU BEGIN -
+- 245 - change ind2 to 0
+- eliminate additional titles (246, 520)
+- add 264 static value
+WU END -->
   <xsl:template match="mods:titleInfo[not(ancestor-or-self::mods:subject)][not(@type)][1]">
     <xsl:call-template name="datafield">
       <xsl:with-param name="tag">245</xsl:with-param>
       <xsl:with-param name="ind1">1</xsl:with-param>
-      <xsl:with-param name="ind2" select="string-length(mods:nonSort)"/>
+      <xsl:with-param name="ind2">0</xsl:with-param>
       <xsl:with-param name="subfields">
         <xsl:call-template name="titleInfo"/>
-        <!-- 1/04 fix -->
-        <xsl:call-template name="stmtOfResponsibility"/>
-        <xsl:call-template name="form"/>
+        <xsl:call-template name="authordisplayForm"/>
       </xsl:with-param>
     </xsl:call-template>
+	<!-- WU BEGIN - 264 static value -->
+      <xsl:call-template name="datafield">
+      <xsl:with-param name="tag">264</xsl:with-param>
+	  <xsl:with-param name="ind2">0</xsl:with-param>
+      <xsl:with-param name="subfields">
+        <marc:subfield code="c">
+		  <xsl:text>YYYY</xsl:text>
+        </marc:subfield>	  
+      </xsl:with-param>
+    </xsl:call-template>
+<!-- WU END -->
   </xsl:template>
 
+<!-- BEGIN WU 520 add indicator 2 -->
   <xsl:template match="mods:abstract">
     <xsl:call-template name="datafield">
       <xsl:with-param name="tag">520</xsl:with-param>
+	  <xsl:with-param name="ind2">3</xsl:with-param>
       <xsl:with-param name="subfields">
         <marc:subfield code="a">
           <xsl:value-of select="."/>
         </marc:subfield>
-        <xsl:for-each select="@xlink:href">
-          <marc:subfield code="u">
-            <xsl:value-of select="."/>
-          </marc:subfield>
-        </xsl:for-each>
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
+<!-- END WU 520 -->
+
+ <!-- WU BEGIN - removed 246, 505, 752, 255 WU END -->
 
   <xsl:template match="mods:subject">
     <xsl:apply-templates/>
