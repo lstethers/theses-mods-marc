@@ -241,51 +241,15 @@ WU END -->
           <xsl:apply-templates mode="ctrl008" select="mods:typeOfResource"/>
         </xsl:variable>
         <!-- 00-05 -->
-<!-- WU BEGIN - ignore creation date
-        <xsl:choose>
-          <xsl:when test="mods:recordInfo/mods:recordContentSource[@authority='marcorg']">
-            <xsl:value-of select="mods:recordInfo/mods:recordCreationDate[@encoding='marc']"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>      </xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 00-05 static "YYMMDD" for theses -->
 		<xsl:text>YYMMDD</xsl:text>
 
         <!-- 06 -->
-<!-- WU BEGIN - static 06
-        <xsl:choose>
-          <xsl:when test="mods:originInfo/mods:issuance='monographic' and count(mods:originInfo/mods:dateIssued)=1">s</xsl:when>
-          <xsl:when test="mods:originInfo/mods:dateIssued[@qualifier='questionable']">q</xsl:when>
-          <xsl:when test="mods:originInfo/mods:issuance='monographic' and mods:originInfo/mods:dateIssued[@point='start'] and mods:originInfo/mods:dateIssued[@point='end']">m</xsl:when>
-          <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']='9999'">c</xsl:when>
-          <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']='uuuu'">u</xsl:when>
-          <xsl:when test="mods:originInfo/mods:issuance='continuing' and mods:originInfo/mods:dateIssued[@point='end' and @encoding='marc']">d</xsl:when>
-          <xsl:when test="not(mods:originInfo/mods:issuance) and mods:originInfo/mods:dateIssued">s</xsl:when>
-          <xsl:when test="mods:originInfo/mods:copyrightDate">s</xsl:when>
-          <xsl:otherwise>|</xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 06 static "s" for theses -->
 		<xsl:text>s</xsl:text>
 
         <!-- 07-14          -->
         <!-- 07-10 -->
-<!-- WU BEGIN - static 07-10
-        <xsl:choose>
-          <xsl:when test="mods:originInfo/mods:dateIssued[@point='start' and @encoding='marc']">
-            <xsl:value-of select="mods:originInfo/mods:dateIssued[@point='start' and @encoding='marc']"/>
-          </xsl:when>
-          <xsl:when test="mods:originInfo/mods:dateIssued[@encoding='marc']">
-            <xsl:value-of select="mods:originInfo/mods:dateIssued[@encoding='marc']"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>    </xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 07-10 static "YYYY" for theses -->
 		<xsl:text>YYYY</xsl:text>
         <!-- 11-14 -->
@@ -298,19 +262,6 @@ WU END -->
           </xsl:otherwise>
         </xsl:choose>
         <!-- 15-17 -->
-<!-- WU BEGIN - static 15-17
-        <xsl:choose>
-          <xsl:when test="mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry']">
-            <xsl:value-of select="mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry']"/>
-            <xsl:if test="string-length(mods:originInfo/mods:place/mods:placeTerm[@type='code'][@authority='marccountry'])=2">
-              <xsl:text> </xsl:text>
-            </xsl:if>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>   </xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 15-17 static "xx " for theses -->
 		<xsl:text>xx </xsl:text>
 
@@ -340,149 +291,20 @@ WU END -->
           <xsl:otherwise>|</xsl:otherwise>
         </xsl:choose>
         <!-- 23 -->
-<!-- WU BEGIN - static 23
-<!--        <xsl:choose>
-          <xsl:when test="$typeOf008='BK' or $typeOf008='MU' or $typeOf008='SE' or $typeOf008='MM'">
-            <xsl:choose>
-              <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='braille'">f</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='electronic'">s</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='microfiche'">b</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='microfilm'">a</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form[@authority='marcform']='print'">
-                <xsl:text> </xsl:text>
-              </xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-          </xsl:when>
-          <xsl:otherwise>|</xsl:otherwise>
-        </xsl:choose> -->
 <!-- WU BEGIN - 23 static "\" for theses -->		
 		<xsl:text>\</xsl:text>
         <!-- 24-27 -->
-<!-- WU BEGIN 24-27 static
-        <xsl:choose>
-          <xsl:when test="$typeOf008='BK'">
-            <xsl:call-template name="controlField008-24-27"/>
-          </xsl:when>
-          <xsl:when test="$typeOf008='MP'">
-            <xsl:text>|</xsl:text>
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='atlas'">e</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='globe'">d</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>||</xsl:text>
-          </xsl:when>
-          <xsl:when test="$typeOf008='CF'">
-            <xsl:text>||</xsl:text>
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='database'">e</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='font'">f</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='game'">g</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='numerical data'">a</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='sound'">h</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>|</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>||||</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 24-27 static "mb||" for theses -->		
 		<xsl:text>mb||</xsl:text>
         <!-- 28 -->
         <xsl:text>|</xsl:text>
         <!-- 29 -->
-<!-- WU BEGIN 29 static
-        <xsl:choose>
-          <xsl:when test="$typeOf008='BK' or $typeOf008='SE'">
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='conference publication'">1</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-          </xsl:when>
-          <xsl:when test="$typeOf008='MP' or $typeOf008='VM'">
-            <xsl:choose>
-              <xsl:when test="mods:physicalDescription/mods:form='braille'">f</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form='electronic'">m</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form='microfiche'">b</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form='microfilm'">a</xsl:when>
-              <xsl:when test="mods:physicalDescription/mods:form='print'">
-                <xsl:text> </xsl:text>
-              </xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-          </xsl:when>
-          <xsl:otherwise>|</xsl:otherwise>
-        </xsl:choose>
--->
-        <!-- 30-31 -->
-<!-- WU BEGIN 30-31 static
-        <xsl:choose>
-          <xsl:when test="$typeOf008='MU'">
-            <xsl:call-template name="controlField008-30-31"/>
-          </xsl:when>
-          <xsl:when test="$typeOf008='BK'">
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='festschrift'">1</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-            <xsl:text>|</xsl:text>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:text>||</xsl:text>
-          </xsl:otherwise>
-        </xsl:choose>
--->
 <!-- WU BEGIN - 29-31 static "000" for theses -->		
 		<xsl:text>000</xsl:text>
         <!-- 32 -->
         <xsl:text>|</xsl:text>
         <!-- 33 -->
-<!-- WU BEGIN - 33 static
-        <xsl:choose>
-          <xsl:when test="$typeOf008='VM'">
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='art originial'">a</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='art reproduction'">c</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='chart'">n</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='diorama'">d</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='filmstrip'">f</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='flash card'">o</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='graphic'">k</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='kit'">b</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='technical drawing'">l</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='slide'">s</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='realia'">r</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='picture'">i</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='motion picture'">m</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='model'">q</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='microscope slide'">p</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='toy'">w</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='transparency'">t</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='videorecording'">v</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-          </xsl:when>
-          <xsl:when test="$typeOf008='BK'">
-            <xsl:choose>
-              <xsl:when test="mods:genre[@authority='marc']='comic strip'">c</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='fiction'">1</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='essay'">e</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='drama'">d</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='humor, satire'">h</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='letter'">i</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='novel'">f</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='short story'">j</xsl:when>
-              <xsl:when test="mods:genre[@authority='marc']='speech'">s</xsl:when>
-              <xsl:otherwise>|</xsl:otherwise>
-            </xsl:choose>
-          </xsl:when>
-          <xsl:otherwise>|</xsl:otherwise>
-        </xsl:choose>
--->
+
 <!-- WU BEGIN - 33 static "0" for theses -->		
 		<xsl:text>0</xsl:text>
         <!-- 34 -->
@@ -506,7 +328,6 @@ WU END -->
           </xsl:otherwise>
         </xsl:choose>
         <!-- 38-39 -->
-<!-- WU BEGIN 38-39 static       <xsl:text>||</xsl:text> -->
 <!-- WU BEGIN - 38-39 static "|d" for theses -->		
 		<xsl:text>|d</xsl:text>
       </marc:controlfield>
@@ -608,7 +429,7 @@ WU END -->
       </xsl:with-param>
     </xsl:call-template>
   </xsl:template>
-  <!-- 1/04 fix -->
+<!-- Required for control fields -->
   <xsl:template name="controlRecordInfo">
     <!--<xsl:template match="mods:recordInfo">-->
     <xsl:for-each select="mods:recordInfo/mods:recordIdentifier">
@@ -627,7 +448,6 @@ WU END -->
       </marc:controlfield>
     </xsl:for-each>
   </xsl:template>
-  <!-- v3 authority -->
 
   <xsl:template name="source">
     <xsl:for-each select="mods:recordInfo/mods:recordContentSource[@authority='marcorg']">
