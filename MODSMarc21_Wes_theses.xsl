@@ -508,34 +508,31 @@ WU END -->
 
  <!-- WU BEGIN - removed 246, 505, 752, 255 WU END -->
 
-  <xsl:template match="mods:subject">
-    <xsl:apply-templates/>
-  </xsl:template>
+<!-- WU BEGIN - title - eliminate partnumber, partname portions. add colon if subtitle exists. add / after end -->
   <xsl:template name="titleInfo">
     <xsl:for-each select="mods:title">
+		<xsl:choose>
+			<xsl:when test="../mods:subTitle">
       <marc:subfield code="a">
-        <xsl:value-of select="../mods:nonSort"/>
-        <xsl:value-of select="."/>
+						<xsl:value-of select="../mods:title"/>
+						<xsl:text> :&#160;</xsl:text>
+						<xsl:text> </xsl:text>
       </marc:subfield>
-    </xsl:for-each>
-    <!-- 1/04 fix -->
-    <xsl:for-each select="mods:subTitle">
       <marc:subfield code="b">
-        <xsl:value-of select="."/>
+						<xsl:value-of select="../mods:subTitle"/>
+						<xsl:text> /&#160;</xsl:text>
       </marc:subfield>
-    </xsl:for-each>
-    <xsl:for-each select="mods:partNumber">
-      <marc:subfield code="n">
+			</xsl:when>
+			<xsl:otherwise>
+					<marc:subfield code="a">
         <xsl:value-of select="."/>
+						<xsl:text> /&#160;</xsl:text>
       </marc:subfield>
-    </xsl:for-each>
-    <xsl:for-each select="mods:partName">
-      <marc:subfield code="p">
-        <xsl:value-of select="."/>
-      </marc:subfield>
+			</xsl:otherwise>
+		</xsl:choose>
     </xsl:for-each>
   </xsl:template>
-
+<!-- WU END - title eliminate partnumber, partname portions. use displayForm of name. add / after end. -->
   <xsl:template name="stmtOfResponsibility">
     <xsl:for-each select="following-sibling::mods:note[@type='statement of responsibility']">
       <marc:subfield code='c'>
