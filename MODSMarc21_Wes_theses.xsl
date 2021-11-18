@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- WU BEGIN 
 Edit history:
+- 20211119 by LSS to change subject:topic to go into 653
 - 20211015 by LSS to set static values in LDR and 008 fields
 - 20211015 by LSS to make some static values lower case  
 - 20211015 by LSS to substitute YYYY placeholder in 264 $c and 502 $a  
@@ -660,11 +661,10 @@ WU END -->
   </xsl:template>
 
 <!-- BEGIN WU remove 650, 630, 600, 651, 650, 656, 887, 510, 440, 800, 810, 811, 787, 780, 785, 775, 776, 534, 773, 774, 787 --> 
-<!-- BEGIN WU - 690 subject/topic -->
+<!-- BEGIN WU - 653 subject/topic -->
   <xsl:template match="mods:subject[local-name(*[1])='topic']">
     <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">690</xsl:with-param>
-      <xsl:with-param name="ind2">4</xsl:with-param>
+      <xsl:with-param name="tag">653</xsl:with-param>
       <xsl:with-param name="subfields">
         <marc:subfield code="a">
           <xsl:value-of select="*[1]"/>
