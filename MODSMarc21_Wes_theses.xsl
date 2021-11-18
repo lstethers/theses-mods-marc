@@ -533,67 +533,38 @@ WU END -->
     </xsl:for-each>
   </xsl:template>
 <!-- WU END - title eliminate partnumber, partname portions. use displayForm of name. add / after end. -->
-  <xsl:template name="stmtOfResponsibility">
-    <xsl:for-each select="following-sibling::mods:note[@type='statement of responsibility']">
+  <xsl:template name="authordisplayForm">  
+      <xsl:for-each select="../mods:name[@type='personal'][mods:role/mods:roleTerm[@type='text']='author'][mods:displayForm]">
       <marc:subfield code='c'>
-        <xsl:value-of select="."/>
+			<xsl:value-of select="mods:displayForm"/>
+			<xsl:text>.</xsl:text>
       </marc:subfield>
     </xsl:for-each>
   </xsl:template>
 
 <!-- BEGIN WU remove 050, 082, 080, 060, 086 -->
 
-  <xsl:template match="mods:identifier[@type='doi']">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">856</xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code="u">
-          <xsl:value-of select="."/>
-        </marc:subfield>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
-  <!--v3 location/url -->
-
+<!-- BEGIN WU modified 856 -->
   <xsl:template match="mods:location[mods:url]">
     <xsl:for-each select="mods:url">
       <xsl:call-template name="datafield">
         <xsl:with-param name="tag">856</xsl:with-param>
+		<xsl:with-param name="ind1">4</xsl:with-param>
+		<xsl:with-param name="ind2">1</xsl:with-param>		
         <xsl:with-param name="subfields">
           <marc:subfield code="u">
             <xsl:value-of select="."/>
           </marc:subfield>
-          <!-- v3 displayLabel -->
-          <xsl:for-each select="@displayLabel">
-            <marc:subfield code="3">
-              <xsl:value-of select="."/>
-            </marc:subfield>
-          </xsl:for-each>
-          <xsl:for-each select="@dateLastAccessed">
-            <marc:subfield code="z">
-              <xsl:value-of select="concat('Last accessed: ',.)"/>
-            </marc:subfield>
-          </xsl:for-each>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:for-each>
+  </xsl:template>  
+  <xsl:template match="mods:location">
+    <xsl:apply-templates/>
   </xsl:template>
+<!-- END WU modified 856 -->
 
 <!-- BEGIN WU remove 020, 024, 028, 010, 720, 110, 111, 711 -->
-  <xsl:template match="mods:identifier[@type='uri']">
-    <xsl:call-template name="datafield">
-      <xsl:with-param name="tag">856</xsl:with-param>
-      <xsl:with-param name="ind2">
-        <xsl:text> </xsl:text>
-      </xsl:with-param>
-      <xsl:with-param name="subfields">
-        <marc:subfield code="u">
-          <xsl:value-of select="."/>
-        </marc:subfield>
-        <xsl:call-template name="mediaType"/>
-      </xsl:with-param>
-    </xsl:call-template>
-  </xsl:template>
 
   <!-- v3 role-->
   <xsl:template match="mods:name[@type='personal'][mods:role/mods:roleTerm[@type='text']='creator']">
